@@ -1,0 +1,50 @@
+Listar processos em execução:
+docker ps
+Executar container
+docker start name/container id
+Executar comandos dentro do container
+docker exec -it id container/name <comando do container>
+Pausar um container
+docker pause id/name
+Despausar um container
+docker unpause id/name
+Executar processo sem travar a linha de comando
+docker run -d <imagem>
+Verificar mapeamento de porta do container
+docker port
+Mapear porta do container para porta do host
+docker run -d -P dockersamples/static-site
+docker run -d -p 8080:80 dockersamples/static-site (definindo uma porta especifica)
+Parar e remover todos os containers em execução
+docker container rm $(docker ps -aq) - - force
+Remover todas as imagens
+docker container rmi $(docker ps -aq)  
+
+O docker run cria um novo container e o executa. O docker exec permite executar um comando em um container que já está em execução.
+
+Imagem é formada por camadas. As camadas são reaproveitadas entre as imagens. As imagens são imutáveis.
+O container é a imagem com uma camada adicional de read/write.
+
+Persistir dados para uma pasta utilizando volume ou mount:
+docker run -it -v c:\dev\alura\docker\criando-iniciandocontainers\volume-docker:/app ubuntu
+ docker run -it --mount type=bind,source=c:\dev\alura\docker\criando-iniciandocontainers\volume-docker,target=/app ubuntu
+Volumes:
+docker volume create meu-volume
+docker run -it -v meu-volume:/app ubuntu
+Tmpfs armazenam dados em memória volátil
+
+Comunicação do docker entre containers
+docker inspect //apresenta detalhes de configuração do container
+As três redes default criadas pelo docker são: host, none e bridge
+docker network ls
+Definindo a rede para comunicação entre containers
+docker network create - - driver bridge minha-bridge
+Definindo nome do container
+docker run -d --name pong --network ubuntu minha-bridge sleep 1d
+Sobre redes:
+A rede host remove o isolamento entre o container e o sistema, enquanto a rede none remove a interface de rede.
+
+Docker compose
+ferramenta de coordenação de containers
+docker-compose up -d
+docker-compose down
